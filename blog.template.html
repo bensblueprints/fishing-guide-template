@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Fishing Blog | Smith Mountain Lake Striper Fishing Tips & Reports</title>
+  <meta name="description" id="page-desc" content="Expert fishing tips, seasonal reports, and guides for striped bass fishing on Smith Mountain Lake from Captain Tommy Moore. Plan your perfect fishing trip.">
+  <link rel="canonical" id="page-canonical" href="https://sml-wicked-striper.netlify.app/blog.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" id="og-title" content="Fishing Blog | SML Wicked Striper Guide Service">
+  <meta property="og:description" id="og-desc" content="Expert fishing tips and guides for Smith Mountain Lake striped bass fishing.">
+  <meta property="og:image" id="og-image" content="https://sml-wicked-striper.netlify.app/images/site_005.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0b1a2e; --navy-light: #112240; --ocean: #1a73e8; --teal: #0ea5e9;
+      --gold: #f59e0b; --gold-light: #fbbf24; --white: #ffffff;
+      --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0; --gray-300: #cbd5e1;
+      --gray-400: #94a3b8; --gray-500: #64748b; --gray-600: #475569; --gray-700: #334155;
+      --gray-800: #1e293b; --gray-900: #0f172a;
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--gray-800); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 1000; padding: 0.6rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--navy); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta { background: var(--navy) !important; color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 6px; font-weight: 700 !important; }
+    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--navy); margin: 5px 0; }
+
+    /* HERO */
+    .blog-hero { background: var(--navy); padding: 4rem 2rem 3rem; text-align: center; }
+    .blog-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem); color: var(--white); letter-spacing: 3px; margin-bottom: 0.5rem; }
+    .blog-hero p { color: var(--gray-400); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+    /* BLOG LIST */
+    .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+    .blog-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+    .blog-card img { width: 100%; height: 220px; object-fit: cover; }
+    .blog-card-body { padding: 1.5rem; }
+    .blog-card-date { font-size: 0.75rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+    .blog-card h2 { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); letter-spacing: 1px; line-height: 1.1; margin-bottom: 0.75rem; }
+    .blog-card p { color: var(--gray-500); font-size: 0.9rem; line-height: 1.6; }
+
+    /* SINGLE POST */
+    .post-container { max-width: 780px; margin: 0 auto; padding: 3rem 2rem; }
+    .post-back { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--teal); text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-bottom: 2rem; }
+    .post-back:hover { color: var(--ocean); }
+    .post-hero-img { width: 100%; height: 400px; object-fit: cover; border-radius: 16px; margin-bottom: 2rem; }
+    .post-meta { font-size: 0.8rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; }
+    .post-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); color: var(--navy); letter-spacing: 2px; line-height: 1; margin-bottom: 1.5rem; }
+    .post-content { color: var(--gray-700); font-size: 1.05rem; line-height: 1.85; }
+    .post-content h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--navy); letter-spacing: 1px; margin: 2.5rem 0 1rem; }
+    .post-content h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); letter-spacing: 1px; margin: 2rem 0 0.75rem; }
+    .post-content p { margin-bottom: 1.25rem; }
+    .post-content ul, .post-content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .post-content li { margin-bottom: 0.5rem; }
+    .post-content a { color: var(--teal); text-decoration: underline; }
+    .post-content img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .post-content blockquote { border-left: 3px solid var(--gold); padding: 1rem 1.5rem; background: var(--gray-50); border-radius: 0 8px 8px 0; margin: 1.5rem 0; font-style: italic; color: var(--gray-600); }
+    .post-cta { background: linear-gradient(135deg, var(--navy), var(--navy-light)); border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 3rem; }
+    .post-cta h3 { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); letter-spacing: 1px; margin-bottom: 0.75rem; }
+    .post-cta p { color: var(--gray-400); margin-bottom: 1.25rem; }
+    .post-cta a { display: inline-block; background: var(--gold); color: var(--navy); padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .post-cta a:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* FOOTER */
+    .footer { background: var(--gray-900); color: var(--gray-400); padding: 3rem 2rem 1.5rem; }
+    .footer-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: var(--gray-500); text-decoration: none; font-size: 0.85rem; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1100px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; font-size: 0.8rem; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.98); padding: 1.5rem 2rem; gap: 1rem; }
+      .mobile-toggle { display: block; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .post-hero-img { height: 250px; }
+      .footer-content, .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html"><img src="images/logo.png" alt="SML Wicked Striper Guide Service" class="nav-logo" style="height:40px;"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#pricing">Rates</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="index.html#booking" class="nav-cta">Book Now</a></li>
+    </ul>
+    <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- CONTENT (blog list or single post) -->
+  <div id="blog-list">
+    <div class="blog-hero">
+      <h1>FISHING BLOG</h1>
+      <p>Tips, reports & guides for striped bass fishing on Smith Mountain Lake from Captain Tommy Moore.</p>
+    </div>
+    <div class="container">
+      <div class="blog-grid" id="blogGrid">Loading...</div>
+    </div>
+  </div>
+
+  <div id="blog-post" style="display:none;">
+    <div class="post-container" id="postContent"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div><img src="images/logo.png" alt="SML Wicked Striper Guide Service" style="height:50px;"></div>
+      <ul class="footer-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#pricing">Rates</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#booking">Book Now</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SML Wicked Striper Guide Service LLC. All rights reserved.</span>
+      <span>Smith Mountain Lake, Virginia &bull; Licensed & Insured</span>
+    </div>
+  </footer>
+
+  <script>
+    let allPosts = [];
+
+    async function loadBlog() {
+      // Load from JSON file + localStorage custom posts
+      try {
+        const resp = await fetch('blog-data.json');
+        if (resp.ok) allPosts = await resp.json();
+      } catch (e) {}
+
+      // Merge custom posts from admin
+      const custom = JSON.parse(localStorage.getItem('ws_blog_posts') || '[]');
+      allPosts = [...custom, ...allPosts];
+
+      // Sort by date descending
+      allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      // Check URL hash for single post
+      const slug = location.hash.replace('#', '');
+      if (slug) {
+        showPost(slug);
+      } else {
+        showList();
+      }
+    }
+
+    function showList() {
+      document.getElementById('blog-list').style.display = 'block';
+      document.getElementById('blog-post').style.display = 'none';
+      document.getElementById('page-title').textContent = 'Fishing Blog | Smith Mountain Lake Striper Fishing Tips & Reports';
+
+      const grid = document.getElementById('blogGrid');
+      if (allPosts.length === 0) {
+        grid.innerHTML = '<p style="color:var(--gray-500);text-align:center;grid-column:1/-1;padding:3rem;">No blog posts yet. Check back soon!</p>';
+        return;
+      }
+
+      grid.innerHTML = allPosts.map(post => {
+        const date = new Date(post.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        const excerpt = post.metaDescription || post.content?.replace(/<[^>]+>/g, '').substring(0, 150) + '...';
+        return `<a class="blog-card" href="#${post.slug}" onclick="showPost('${post.slug}')">
+          <img src="${post.heroImage || 'images/site_005.jpg'}" alt="${post.title}" loading="lazy">
+          <div class="blog-card-body">
+            <div class="blog-card-date">${date}</div>
+            <h2>${post.title}</h2>
+            <p>${excerpt}</p>
+          </div>
+        </a>`;
+      }).join('');
+    }
+
+    function showPost(slug) {
+      const post = allPosts.find(p => p.slug === slug);
+      if (!post) { showList(); return; }
+
+      document.getElementById('blog-list').style.display = 'none';
+      document.getElementById('blog-post').style.display = 'block';
+
+      // Update meta for SEO (client-side, mainly for social sharing previews)
+      document.getElementById('page-title').textContent = post.title + ' | SML Wicked Striper Guide Service';
+      document.getElementById('page-desc')?.setAttribute('content', post.metaDescription || '');
+
+      const date = new Date(post.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+      document.getElementById('postContent').innerHTML = `
+        <a href="blog.html" class="post-back" onclick="event.preventDefault();location.hash='';showList();window.scrollTo(0,0);">&larr; Back to Blog</a>
+        ${post.heroImage ? `<img src="${post.heroImage}" alt="${post.title}" class="post-hero-img">` : ''}
+        <div class="post-meta">${date} &bull; Captain Tommy Moore</div>
+        <h1 class="post-title">${post.title.toUpperCase()}</h1>
+        <div class="post-content">${post.content}</div>
+        <div class="post-cta">
+          <h3>READY TO FISH SMITH MOUNTAIN LAKE?</h3>
+          <p>Book your guided striper fishing trip with Captain Tommy Moore today.</p>
+          <a href="index.html#booking">Book Your Trip &rarr;</a>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('hashchange', () => {
+      const slug = location.hash.replace('#', '');
+      if (slug) showPost(slug); else showList();
+    });
+
+    // Google Analytics
+    (function(){
+      var gaId = localStorage.getItem('ws_ga_id');
+      if (gaId) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+      }
+    })();
+
+    loadBlog();
+
+    // Analytics tracker
+    (function(){
+      if (sessionStorage.getItem('ws_tracked')) return;
+      sessionStorage.setItem('ws_tracked', '1');
+      var data = new URLSearchParams({ 'form-name': 'pageview', page: location.pathname + location.hash, referrer: document.referrer || 'direct', timestamp: new Date().toISOString(), screen: screen.width + 'x' + screen.height, ua: navigator.userAgent.substring(0, 200) });
+      navigator.sendBeacon('/', data);
+    })();
+  </script>
+  <form name="pageview" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="page"><input name="referrer"><input name="timestamp"><input name="screen"><input name="ua">
+  </form>
+</body>
+</html>

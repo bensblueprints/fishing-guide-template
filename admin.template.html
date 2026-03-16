@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | SML Wicked Striper Guide Service</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0b1a2e;
+      --navy-light: #112240;
+      --navy-lighter: #1a2f4a;
+      --navy-card: #162a45;
+      --ocean: #1a73e8;
+      --teal: #0ea5e9;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --gold-dim: rgba(245, 158, 11, 0.15);
+      --white: #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --green: #22c55e;
+      --green-dim: rgba(34, 197, 94, 0.15);
+      --blue: #3b82f6;
+      --blue-dim: rgba(59, 130, 246, 0.15);
+      --red: #ef4444;
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--gray-300);
+      background: var(--navy);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ========== LOGIN SCREEN ========== */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2137 50%, var(--navy-light) 100%);
+    }
+
+    .login-container {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: var(--radius);
+      padding: 3rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .login-logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--white);
+      letter-spacing: 3px;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-logo span { color: var(--gold); }
+
+    .login-subtitle {
+      color: var(--gray-400);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--navy);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .login-input:focus {
+      border-color: var(--gold);
+    }
+
+    .login-input::placeholder { color: var(--gray-500); }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .login-btn:hover { background: var(--gold-light); }
+    .login-btn:active { transform: scale(0.98); }
+
+    .login-error {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    /* ========== DASHBOARD ========== */
+    #dashboard {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--navy-light);
+      border-bottom: 1px solid var(--navy-lighter);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .topbar-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: 2px;
+    }
+
+    .topbar-logo span { color: var(--gold); }
+
+    .topbar-badge {
+      background: var(--gold-dim);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .refresh-btn, .logout-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .refresh-btn {
+      background: var(--navy-lighter);
+      color: var(--gray-300);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .refresh-btn:hover { background: var(--navy-card); color: var(--white); }
+
+    .logout-btn {
+      background: transparent;
+      color: var(--gray-400);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logout-btn:hover { color: var(--red); border-color: rgba(239,68,68,0.3); }
+
+    .dashboard-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ========== STATS CARDS ========== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--white);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .stat-value.gold { color: var(--gold); }
+    .stat-value.teal { color: var(--teal); }
+    .stat-value.green { color: var(--green); }
+
+    .stat-sub {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      margin-top: 0.5rem;
+    }
+
+    /* ========== CONTROLS ========== */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.7rem 1rem;
+      padding-left: 2.5rem;
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--gold); }
+    .search-input::placeholder { color: var(--gray-500); }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-500);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .filter-select {
+      padding: 0.7rem 1rem;
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 8px;
+      color: var(--gray-300);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .filter-select:focus { border-color: var(--gold); }
+
+    .filter-select option {
+      background: var(--navy-light);
+      color: var(--gray-300);
+    }
+
+    /* ========== TABS ========== */
+    .tab-btn {
+      padding: 0.6rem 1.5rem;
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 8px;
+      color: var(--gray-400);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.15); }
+    .tab-btn.active {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .chart-bar {
+      flex: 1;
+      min-width: 4px;
+      background: linear-gradient(to top, var(--teal), var(--ocean));
+      border-radius: 3px 3px 0 0;
+      position: relative;
+      transition: opacity 0.2s;
+    }
+    .chart-bar:hover { opacity: 0.8; }
+    /* ========== BOOKING ACTIONS ========== */
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--navy-lighter);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .action-btn {
+      padding: 0.55rem 1.2rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .action-btn-confirm {
+      background: var(--green);
+      color: var(--navy);
+    }
+    .action-btn-confirm:hover { background: #16a34a; transform: translateY(-1px); }
+    .action-btn-calendar {
+      background: var(--blue);
+      color: white;
+    }
+    .action-btn-calendar:hover { background: #2563eb; transform: translateY(-1px); }
+    .action-btn-edit {
+      background: var(--navy-lighter);
+      color: var(--gray-300);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .action-btn-edit:hover { background: var(--navy-card); color: var(--white); }
+    .action-btn-complete {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .action-btn-complete:hover { background: var(--gold-light); }
+    .action-confirmed {
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .edit-date-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: var(--navy);
+      border-radius: 8px;
+      border: 1px solid var(--navy-lighter);
+    }
+    .edit-date-row label {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .edit-date-row input {
+      padding: 0.5rem 0.75rem;
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 6px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .edit-date-row input:focus { border-color: var(--gold); }
+    .edit-date-row .save-btn {
+      padding: 0.5rem 1rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .edit-date-row .save-btn:hover { background: var(--gold-light); }
+
+    /* Calendar settings */
+    .gcal-settings {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .gcal-settings h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .gcal-connected {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--green-dim);
+      color: var(--green);
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ========== CALENDAR ========== */
+    .cal-dayheader {
+      padding: 0.6rem;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: var(--navy-card);
+      border-bottom: 1px solid var(--navy-lighter);
+    }
+    .cal-day {
+      min-height: 100px;
+      padding: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.03);
+      background: var(--navy-light);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .cal-day:hover { background: var(--navy-card); }
+    .cal-day.other-month { opacity: 0.3; }
+    .cal-day.today { border-color: var(--gold); background: rgba(245,158,11,0.05); }
+    .cal-day-num {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-300);
+      margin-bottom: 0.3rem;
+    }
+    .cal-day.today .cal-day-num { color: var(--gold); }
+    .cal-event {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.35rem;
+      border-radius: 3px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+    .cal-event.booking-confirmed { background: rgba(34,197,94,0.2); color: var(--green); border-left: 2px solid var(--green); }
+    .cal-event.booking-new { background: var(--gold-dim); color: var(--gold); border-left: 2px solid var(--gold); }
+    .cal-event.booking-manual { background: var(--blue-dim); color: var(--blue); border-left: 2px solid var(--blue); }
+    .cal-event.booking-completed { background: rgba(34,197,94,0.1); color: rgba(34,197,94,0.5); border-left: 2px solid rgba(34,197,94,0.3); }
+    .cal-event.blocked { background: rgba(239,68,68,0.15); color: var(--red); border-left: 2px solid var(--red); }
+    @media (max-width: 768px) {
+      .cal-day { min-height: 60px; }
+      .cal-event { font-size: 0.55rem; }
+    }
+
+    .chart-bar .chart-tip {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      margin-bottom: 4px;
+      pointer-events: none;
+    }
+    .chart-bar:hover .chart-tip { display: block; }
+
+    /* ========== TABLE ========== */
+    .table-container {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-lighter);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: var(--navy-card);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--navy-lighter);
+      position: sticky;
+      top: 0;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    tbody tr:hover {
+      background: rgba(245, 158, 11, 0.04);
+    }
+
+    tbody td {
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .td-name {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .td-email {
+      color: var(--teal);
+    }
+
+    .td-date {
+      color: var(--gray-400);
+      font-size: 0.8rem;
+    }
+
+    .td-amount {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ========== STATUS BADGES ========== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .badge-new {
+      background: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    .badge-confirmed {
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+
+    .badge-completed {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+
+    .badge-cancelled {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+      text-decoration: line-through;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ========== STATUS DROPDOWN ========== */
+    .status-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .status-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 50;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 8px;
+      padding: 0.35rem;
+      margin-top: 0.35rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      min-width: 140px;
+    }
+
+    .status-menu.open { display: block; }
+
+    .status-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: var(--gray-300);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: var(--font-body);
+    }
+
+    .status-option:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+    }
+
+    /* ========== EXPANDED ROW ========== */
+    .detail-row {
+      display: none;
+    }
+
+    .detail-row.open {
+      display: table-row;
+    }
+
+    .detail-cell {
+      padding: 1.25rem 1rem 1.25rem 2.5rem;
+      background: rgba(0,0,0,0.15);
+      border-bottom: 1px solid var(--navy-lighter);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .detail-item label {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.2rem;
+    }
+
+    .detail-item span {
+      font-size: 0.88rem;
+      color: var(--gray-200);
+    }
+
+    .detail-notes {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--navy-lighter);
+    }
+
+    .detail-notes label {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-notes p {
+      font-size: 0.88rem;
+      color: var(--gray-300);
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    /* ========== LOADING / EMPTY ========== */
+    .loading-state, .empty-state, .error-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--navy-lighter);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text, .empty-text {
+      color: var(--gray-400);
+      font-size: 0.9rem;
+    }
+
+    .error-text {
+      color: var(--red);
+      font-size: 0.9rem;
+    }
+
+    .error-detail {
+      color: var(--gray-500);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ========== PAGINATION ========== */
+    .table-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-top: 1px solid var(--navy-lighter);
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    .pagination {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .page-btn {
+      padding: 0.4rem 0.75rem;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-lighter);
+      border-radius: 6px;
+      color: var(--gray-400);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .page-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .page-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 600; }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .dashboard-content { padding: 1rem; }
+      .topbar { padding: 0.75rem 1rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .stat-card { padding: 1rem; }
+      .stat-value { font-size: 2rem; }
+      .controls { gap: 0.75rem; }
+      .search-wrapper { min-width: 100%; }
+      .detail-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .topbar-badge { display: none; }
+      .topbar-right { gap: 0.5rem; }
+      .refresh-btn span, .logout-btn span { display: none; }
+    }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--navy-lighter); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gray-600); }
+  </style>
+</head>
+<body>
+
+<!-- ==================== LOGIN SCREEN ==================== -->
+<div id="login-screen">
+  <div class="login-container">
+    <div class="login-logo"><img src="images/logo.png" alt="SML Wicked Striper" style="height:60px;width:auto;"></div>
+    <div class="login-subtitle">Admin Dashboard</div>
+    <input type="password" class="login-input" id="password-input" placeholder="Enter admin password" autofocus>
+    <button class="login-btn" id="login-btn" onclick="attemptLogin()">SIGN IN</button>
+    <div class="login-error" id="login-error">Invalid password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div id="dashboard">
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo"><img src="images/logo.png" alt="SML Wicked Striper" style="height:36px;width:auto;"></div>
+      <span class="topbar-badge">Admin</span>
+    </div>
+    <div class="topbar-right">
+      <span style="color: var(--gray-500); font-size: 0.78rem;" id="last-refresh"></span>
+      <button class="refresh-btn" onclick="fetchBookings()">&#8635; <span>Refresh</span></button>
+      <button class="logout-btn" onclick="logout()">&#9109; <span>Logout</span></button>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <!-- Tabs -->
+    <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;">
+      <button class="tab-btn active" id="tab-bookings" onclick="switchTab('bookings')">Bookings</button>
+      <button class="tab-btn" id="tab-blog" onclick="switchTab('blog')">Blog</button>
+      <button class="tab-btn" id="tab-calendar" onclick="switchTab('calendar')">Trip Calendar</button>
+      <button class="tab-btn" id="tab-traffic" onclick="switchTab('traffic')">Traffic & Analytics</button>
+      <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">Settings</button>
+    </div>
+
+    <!-- ==================== BOOKINGS TAB ==================== -->
+    <div id="panel-bookings">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Bookings</div>
+        <div class="stat-value gold" id="stat-total">--</div>
+        <div class="stat-sub">All time submissions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last 7 Days</div>
+        <div class="stat-value teal" id="stat-recent">--</div>
+        <div class="stat-sub">Recent submissions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Confirmed</div>
+        <div class="stat-value green" id="stat-confirmed">--</div>
+        <div class="stat-sub">Ready to fish</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">New / Unreviewed</div>
+        <div class="stat-value" id="stat-new" style="color: var(--gray-300);">--</div>
+        <div class="stat-sub">Needs attention</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-wrapper">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Search by name, email, phone, or trip type..." oninput="applyFilters()">
+      </div>
+      <select class="filter-select" id="status-filter" onchange="applyFilters()">
+        <option value="all">All Status</option>
+        <option value="new">New</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <select class="filter-select" id="sort-select" onchange="applyFilters()">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="name">By Name</option>
+        <option value="date">By Trip Date</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Submitted</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Trip Type</th>
+              <th>Guests</th>
+              <th>Trip Date</th>
+              <th>Est. Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="bookings-body">
+            <tr>
+              <td colspan="9">
+                <div class="loading-state">
+                  <div class="loading-spinner"></div>
+                  <div class="loading-text">Loading bookings...</div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <span id="showing-count">Showing 0 bookings</span>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+    </div><!-- end panel-bookings -->
+
+    <!-- ==================== BLOG TAB ==================== -->
+    <div id="panel-blog" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <div>
+          <h2 style="font-family:var(--font-display);font-size:1.8rem;color:var(--white);letter-spacing:2px;">BLOG POSTS</h2>
+          <p style="color:var(--gray-400);font-size:0.85rem;" id="blog-count">0 posts</p>
+        </div>
+        <button class="action-btn action-btn-confirm" onclick="openBlogEditor()">+ New Blog Post</button>
+      </div>
+
+      <div id="blog-posts-list" style="display:flex;flex-direction:column;gap:1rem;">Loading...</div>
+
+      <!-- Blog Editor Modal -->
+      <div id="modal-blog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:2rem;">
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:2rem;width:100%;max-width:800px;margin:2rem auto;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--white);letter-spacing:1px;" id="blog-editor-title">NEW BLOG POST</h3>
+            <button class="action-btn action-btn-edit" onclick="closeBlogEditor()" style="padding:0.4rem 0.75rem;">&#10005;</button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div style="grid-column:span 2;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Post Title</label><input id="be-title" class="login-input" style="margin:0;" placeholder="e.g. Best Times to Fish Smith Mountain Lake"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">URL Slug</label><input id="be-slug" class="login-input" style="margin:0;" placeholder="auto-generated-from-title"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Date</label><input id="be-date" type="date" class="login-input" style="margin:0;"></div>
+          </div>
+
+          <div style="margin-bottom:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Meta Description (SEO)</label><input id="be-meta" class="login-input" style="margin:0;" placeholder="150-160 chars for search results" maxlength="160"></div>
+
+          <div style="margin-bottom:1rem;">
+            <label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Featured Image</label>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <select id="be-image" class="login-input" style="margin:0;flex:1;">
+                <option value="images/site_008.jpg">Catch photo 1</option>
+                <option value="images/site_009.jpg">Kid fishing</option>
+                <option value="images/site_011.jpg">Captain with catch</option>
+                <option value="images/site_012.jpg">Catch photo 2</option>
+                <option value="images/site_013.jpg">Catch photo 3</option>
+                <option value="images/site_014.jpg">Catch photo 4</option>
+                <option value="images/site_015.jpg">Group catch</option>
+                <option value="images/site_016.jpg">Catch photo 5</option>
+                <option value="images/site_017.jpg">Catch photo 6</option>
+                <option value="images/site_018.jpg">Catch photo 7</option>
+                <option value="images/site_019.jpg">Fishing action</option>
+                <option value="images/site_020.jpg">Catch photo 8</option>
+                <option value="images/site_021.jpg">Catch photo 9</option>
+                <option value="images/site_022.jpg">Catch photo 10</option>
+                <option value="images/site_001.jpg">Boat on lake</option>
+                <option value="images/site_005.jpg">Boat at sunset</option>
+              </select>
+              <label class="action-btn action-btn-calendar" style="cursor:pointer;margin:0;">
+                Upload <input type="file" id="be-upload" accept="image/*" style="display:none;" onchange="handleBlogImageUpload(this)">
+              </label>
+            </div>
+            <div id="be-image-preview" style="margin-top:0.5rem;"></div>
+          </div>
+
+          <!-- Toolbar -->
+          <div style="margin-bottom:0.5rem;display:flex;gap:0.25rem;flex-wrap:wrap;">
+            <button class="action-btn action-btn-edit" onclick="blogFormat('h2')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">H2</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('h3')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">H3</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('bold')" style="padding:0.3rem 0.6rem;font-size:0.75rem;font-weight:700;">B</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('italic')" style="padding:0.3rem 0.6rem;font-size:0.75rem;font-style:italic;">I</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('link')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">Link</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('ul')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">List</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('quote')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">Quote</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('image')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">Img</button>
+            <button class="action-btn action-btn-edit" onclick="blogFormat('p')" style="padding:0.3rem 0.6rem;font-size:0.75rem;">Para</button>
+          </div>
+
+          <div style="margin-bottom:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Content (HTML)</label><textarea id="be-content" class="login-input" style="margin:0;min-height:350px;font-family:monospace;font-size:0.8rem;line-height:1.5;resize:vertical;" placeholder="<p>Write your blog post content here...</p>"></textarea></div>
+
+          <div style="display:flex;gap:0.75rem;">
+            <button class="action-btn action-btn-confirm" onclick="saveBlogPost()" style="flex:1;justify-content:center;padding:0.75rem;">Publish Post</button>
+            <button class="action-btn action-btn-edit" onclick="closeBlogEditor()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- end panel-blog -->
+
+    <!-- ==================== CALENDAR TAB ==================== -->
+    <div id="panel-calendar" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="action-btn action-btn-edit" onclick="calNav(-1)" style="padding:0.5rem 0.75rem;">&laquo;</button>
+          <h2 id="cal-month-label" style="font-family:var(--font-display);font-size:1.8rem;color:var(--white);letter-spacing:2px;min-width:220px;text-align:center;"></h2>
+          <button class="action-btn action-btn-edit" onclick="calNav(1)" style="padding:0.5rem 0.75rem;">&raquo;</button>
+          <button class="action-btn action-btn-edit" onclick="calToday()" style="font-size:0.75rem;">Today</button>
+        </div>
+        <div style="display:flex;gap:0.75rem;">
+          <button class="action-btn action-btn-confirm" onclick="openManualBooking()">+ Add Trip</button>
+          <button class="action-btn action-btn-edit" onclick="openBlockDates()" style="border-color:rgba(239,68,68,0.3);color:var(--red);">Block Dates</button>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;gap:1.5rem;margin-bottom:1rem;font-size:0.75rem;color:var(--gray-400);">
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;margin-right:4px;"></span> Confirmed</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--gold);border-radius:2px;margin-right:4px;"></span> New / Pending</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px;margin-right:4px;"></span> Manual Trip</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px;margin-right:4px;"></span> Blocked</span>
+      </div>
+
+      <!-- Calendar Grid -->
+      <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);overflow:hidden;">
+        <div id="cal-header" style="display:grid;grid-template-columns:repeat(7,1fr);"></div>
+        <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);"></div>
+      </div>
+
+      <!-- Manual Booking Modal -->
+      <div id="modal-manual" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:none;align-items:center;justify-content:center;">
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:2rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+          <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--white);letter-spacing:1px;margin-bottom:1.5rem;">ADD MANUAL TRIP</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Guest Name</label><input id="m-name" class="login-input" style="margin:0;" placeholder="John Smith"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Phone</label><input id="m-phone" class="login-input" style="margin:0;" placeholder="(555) 123-4567"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Email</label><input id="m-email" class="login-input" style="margin:0;" placeholder="email@example.com"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Trip Date</label><input id="m-date" type="date" class="login-input" style="margin:0;"></div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Trip Length</label>
+              <select id="m-trip" class="login-input" style="margin:0;"><option value="half-day">Half Day - 4hr ($400)</option><option value="full-day" selected>Full Day - 6hr ($600)</option><option value="marathon">Marathon - 8hr ($800)</option></select>
+            </div>
+            <div><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Guests</label>
+              <select id="m-guests" class="login-input" style="margin:0;"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+            </div>
+          </div>
+          <div style="margin-top:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Notes</label><input id="m-notes" class="login-input" style="margin:0;" placeholder="Optional notes..."></div>
+          <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
+            <button class="action-btn action-btn-confirm" onclick="saveManualBooking()" style="flex:1;justify-content:center;">Save Trip</button>
+            <button class="action-btn action-btn-edit" onclick="closeModal('modal-manual')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Block Dates Modal -->
+      <div id="modal-block" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:none;align-items:center;justify-content:center;">
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:2rem;width:100%;max-width:400px;">
+          <h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">BLOCK DATES</h3>
+          <p style="color:var(--gray-400);font-size:0.85rem;margin-bottom:1.25rem;">Block off dates when you're unavailable. These show as red on the calendar and prevent double-booking.</p>
+          <div style="margin-bottom:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Start Date</label><input id="b-start" type="date" class="login-input" style="margin:0;"></div>
+          <div style="margin-bottom:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">End Date</label><input id="b-end" type="date" class="login-input" style="margin:0;"></div>
+          <div style="margin-bottom:1rem;"><label style="display:block;font-size:0.7rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Reason (optional)</label><input id="b-reason" class="login-input" style="margin:0;" placeholder="e.g. Boat maintenance, Personal"></div>
+          <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
+            <button class="action-btn" onclick="saveBlockDates()" style="flex:1;justify-content:center;background:var(--red);color:white;">Block Dates</button>
+            <button class="action-btn action-btn-edit" onclick="closeModal('modal-block')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- end panel-calendar -->
+
+    <!-- ==================== TRAFFIC TAB ==================== -->
+    <div id="panel-traffic" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Sessions</div>
+          <div class="stat-value gold" id="t-total">--</div>
+          <div class="stat-sub">All tracked visits</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last 7 Days</div>
+          <div class="stat-value teal" id="t-week">--</div>
+          <div class="stat-sub">Recent sessions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last 24 Hours</div>
+          <div class="stat-value green" id="t-today">--</div>
+          <div class="stat-sub">Today's sessions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Top Referrer</div>
+          <div class="stat-value" id="t-topreferrer" style="color:var(--gray-300);font-size:1.1rem;word-break:break-all;">--</div>
+          <div class="stat-sub">Most common source</div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;">
+        <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">DAILY VISITORS (LAST 30 DAYS)</h3>
+        <div id="chart-container" style="position:relative;height:200px;display:flex;align-items:flex-end;gap:3px;padding-bottom:1.5rem;"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">TOP PAGES</h3>
+          <div id="top-pages-body" style="font-size:0.85rem;color:var(--gray-400);">Loading...</div>
+        </div>
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">TOP SOURCES</h3>
+          <div id="top-sources-body" style="font-size:0.85rem;color:var(--gray-400);">Loading...</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">SCREEN SIZES</h3>
+          <div id="screen-sizes-body" style="font-size:0.85rem;color:var(--gray-400);">Loading...</div>
+        </div>
+        <div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.5rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1rem;">DEVICES</h3>
+          <div id="devices-body" style="font-size:0.85rem;color:var(--gray-400);">Loading...</div>
+        </div>
+      </div>
+    </div><!-- end panel-traffic -->
+
+    <!-- ==================== SETTINGS TAB ==================== -->
+    <div id="panel-settings" style="display:none;">
+      <div class="gcal-settings">
+        <h3>GOOGLE CALENDAR INTEGRATION</h3>
+        <p style="color:var(--gray-400);font-size:0.9rem;margin-bottom:1.25rem;">Connect your Google Calendar so confirmed bookings automatically sync as events. When you confirm a booking, it will be added to your calendar.</p>
+
+        <div id="gcal-status" style="margin-bottom:1rem;">
+          <span style="color:var(--gray-500);font-size:0.85rem;">Not connected</span>
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <label style="display:block;font-size:0.75rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.4rem;">Google OAuth Client ID</label>
+          <div style="display:flex;gap:0.75rem;align-items:center;">
+            <input type="text" id="gcal-client-id" placeholder="your-client-id.apps.googleusercontent.com" style="flex:1;padding:0.7rem 1rem;background:var(--navy);border:1px solid var(--navy-lighter);border-radius:8px;color:var(--white);font-family:var(--font-body);font-size:0.85rem;outline:none;">
+            <button class="action-btn action-btn-calendar" onclick="saveGCalClientId()">Save</button>
+          </div>
+          <p style="color:var(--gray-500);font-size:0.75rem;margin-top:0.5rem;">Create at <a href="https://console.cloud.google.com/apis/credentials" target="_blank" style="color:var(--teal);">Google Cloud Console</a> → Credentials → OAuth 2.0 Client ID (Web). Add <code style="background:var(--navy);padding:0.1rem 0.3rem;border-radius:3px;">https://sml-wicked-striper.netlify.app</code> as authorized JavaScript origin. Enable the <a href="https://console.cloud.google.com/apis/library/calendar-json.googleapis.com" target="_blank" style="color:var(--teal);">Google Calendar API</a>.</p>
+        </div>
+
+        <button class="action-btn action-btn-calendar" id="gcal-connect-btn" onclick="connectGoogleCalendar()" style="padding:0.7rem 1.5rem;font-size:0.9rem;" disabled>
+          &#128197; Connect Google Calendar
+        </button>
+        <button class="action-btn action-btn-edit" id="gcal-disconnect-btn" onclick="disconnectGoogleCalendar()" style="display:none;padding:0.7rem 1.5rem;font-size:0.9rem;">
+          Disconnect
+        </button>
+      </div>
+
+      <div class="gcal-settings">
+        <h3>GOOGLE ANALYTICS</h3>
+        <p style="color:var(--gray-400);font-size:0.9rem;margin-bottom:1.25rem;">Add your Google Analytics 4 Measurement ID to track all website traffic, conversions, and user behavior in your Google Analytics dashboard.</p>
+        <div style="margin-bottom:1rem;">
+          <label style="display:block;font-size:0.75rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.4rem;">GA4 Measurement ID</label>
+          <div style="display:flex;gap:0.75rem;align-items:center;">
+            <input type="text" id="ga-id" placeholder="G-XXXXXXXXXX" style="flex:1;padding:0.7rem 1rem;background:var(--navy);border:1px solid var(--navy-lighter);border-radius:8px;color:var(--white);font-family:var(--font-body);font-size:0.85rem;outline:none;">
+            <button class="action-btn action-btn-confirm" onclick="saveGAId()">Save</button>
+          </div>
+          <div id="ga-status" style="margin-top:0.5rem;font-size:0.8rem;"></div>
+        </div>
+        <p style="color:var(--gray-500);font-size:0.75rem;">Get your Measurement ID from <a href="https://analytics.google.com/" target="_blank" style="color:var(--teal);">Google Analytics</a> &rarr; Admin &rarr; Data Streams &rarr; Web. It looks like <code style="background:var(--navy);padding:0.1rem 0.3rem;border-radius:3px;">G-XXXXXXXXXX</code>. Once saved, the tracking code is automatically injected into all pages.</p>
+      </div>
+
+      <div class="gcal-settings">
+        <h3>BOOKING EMAIL NOTIFICATIONS</h3>
+        <p style="color:var(--gray-400);font-size:0.9rem;margin-bottom:1.25rem;">Get an email every time someone submits a booking request. Notifications are sent by Netlify to the email(s) below.</p>
+        <div style="margin-bottom:1rem;">
+          <label style="display:block;font-size:0.75rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.4rem;">Notification Email</label>
+          <div style="display:flex;gap:0.75rem;align-items:center;">
+            <input type="email" id="notif-email" placeholder="captain@example.com" style="flex:1;padding:0.7rem 1rem;background:var(--navy);border:1px solid var(--navy-lighter);border-radius:8px;color:var(--white);font-family:var(--font-body);font-size:0.85rem;outline:none;">
+            <button class="action-btn action-btn-confirm" onclick="saveNotifEmail()">Save</button>
+          </div>
+          <div id="notif-status" style="margin-top:0.5rem;font-size:0.8rem;"></div>
+        </div>
+        <p style="color:var(--gray-500);font-size:0.75rem;">This sets the Netlify form notification email. You'll receive an email with all booking details each time someone submits the form.</p>
+      </div>
+
+      <div class="gcal-settings">
+        <h3>QUICK CALENDAR (NO SETUP NEEDED)</h3>
+        <p style="color:var(--gray-400);font-size:0.9rem;margin-bottom:0.75rem;">Don't want to set up OAuth? No problem. When you confirm a booking, an <strong style="color:var(--white);">"Add to Google Calendar"</strong> button will appear. Click it to add the event directly &mdash; no API connection needed.</p>
+        <p style="color:var(--green);font-size:0.85rem;">&#10003; This works by default with no setup.</p>
+      </div>
+    </div><!-- end panel-settings -->
+
+  </div>
+</div>
+
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+  // ========== CONFIGURATION ==========
+  const SITE_ID = '63f0e106-c602-4e7c-8f72-36d8dd69011b';
+  const NETLIFY_TOKEN = 'nfp_2r8NMnaW5BxpaWHWXXu6ZbePvQAQjqkp682b';
+  const PASSWORD_HASH = '19e86a91003b7fd4eb60d2b2e1b710413bb15f95a36884e2e58b818a6add67d5';
+  const FORM_NAME = 'booking';
+  const PER_PAGE = 20;
+
+  let allBookings = [];
+  let filteredBookings = [];
+  let currentPage = 1;
+  let formId = null;
+
+  // ========== AUTH ==========
+  async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function attemptLogin() {
+    const pw = document.getElementById('password-input').value;
+    const hash = await sha256(pw);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem('ws_auth', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('login-error').style.display = 'none';
+      fetchBookings();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('password-input').value = '';
+      document.getElementById('password-input').focus();
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('ws_auth');
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('password-input').value = '';
+  }
+
+  // Enter key to login
+  document.getElementById('password-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') attemptLogin();
+  });
+
+  // Check session on load
+  if (sessionStorage.getItem('ws_auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    fetchBookings();
+  }
+
+  // ========== DATA FETCHING ==========
+  async function getFormId() {
+    if (formId) return formId;
+    const resp = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/forms`, {
+      headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}` }
+    });
+    if (!resp.ok) throw new Error(`Failed to fetch forms: ${resp.status} ${resp.statusText}`);
+    const forms = await resp.json();
+    const bookingForm = forms.find(f => f.name === FORM_NAME);
+    if (!bookingForm) throw new Error(`Form "${FORM_NAME}" not found. Available forms: ${forms.map(f => f.name).join(', ') || 'none'}`);
+    formId = bookingForm.id;
+    return formId;
+  }
+
+  async function fetchBookings() {
+    const tbody = document.getElementById('bookings-body');
+    tbody.innerHTML = `<tr><td colspan="9"><div class="loading-state"><div class="loading-spinner"></div><div class="loading-text">Loading bookings...</div></div></td></tr>`;
+
+    try {
+      const fId = await getFormId();
+
+      // Fetch all submissions (paginate if needed)
+      let page = 1;
+      let allSubs = [];
+      let keepFetching = true;
+
+      while (keepFetching) {
+        const resp = await fetch(`https://api.netlify.com/api/v1/forms/${fId}/submissions?per_page=100&page=${page}`, {
+          headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}` }
+        });
+        if (!resp.ok) throw new Error(`Failed to fetch submissions: ${resp.status} ${resp.statusText}`);
+        const subs = await resp.json();
+        if (subs.length === 0) {
+          keepFetching = false;
+        } else {
+          allSubs = allSubs.concat(subs);
+          if (subs.length < 100) keepFetching = false;
+          page++;
+        }
+      }
+
+      allBookings = allSubs.map(s => {
+        const d = s.data || {};
+        const firstName = d.firstName || d['first-name'] || d.first_name || '';
+        const lastName = d.lastName || d['last-name'] || d.last_name || '';
+        const fullName = (firstName + ' ' + lastName).trim() || d.name || d.Name || d['full-name'] || d.fullName || '--';
+        return {
+          id: s.id,
+          created_at: s.created_at,
+          name: fullName,
+          email: d.email || d.Email || '--',
+          phone: d.phone || d.Phone || d.tel || '--',
+          trip_type: d.tripType || d['trip-type'] || d['Trip Type'] || d.trip_type || '--',
+          guests: d.guests || d.Guests || d['number-of-guests'] || d.numberOfGuests || '--',
+          preferred_date: d.date || d['preferred-date'] || d.preferredDate || d['Preferred Date'] || d.preferred_date || '--',
+          estimated_total: d.estimatedTotal || d['estimated-total'] || d['Estimated Total'] || d.total || d.estimated_total || '--',
+          notes: d.message || d.notes || d.Notes || d.Message || '',
+          raw: d
+        };
+      });
+
+      updateStats();
+      applyFilters();
+
+      const now = new Date();
+      document.getElementById('last-refresh').textContent = `Updated ${now.toLocaleTimeString()}`;
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="9"><div class="error-state"><div class="error-text">Failed to load bookings</div><div class="error-detail">${escapeHtml(err.message)}</div></div></td></tr>`;
+      console.error(err);
+    }
+  }
+
+  // ========== STATUS MANAGEMENT ==========
+  function getStatuses() {
+    try {
+      return JSON.parse(localStorage.getItem('ws_booking_statuses') || '{}');
+    } catch { return {}; }
+  }
+
+  function setStatus(bookingId, status) {
+    const statuses = getStatuses();
+    statuses[bookingId] = status;
+    localStorage.setItem('ws_booking_statuses', JSON.stringify(statuses));
+    updateStats();
+    applyFilters();
+  }
+
+  function getStatus(bookingId) {
+    return getStatuses()[bookingId] || 'new';
+  }
+
+  function renderBadge(status) {
+    const labels = { new: 'New', confirmed: 'Confirmed', completed: 'Completed', cancelled: 'Cancelled' };
+    return `<span class="badge badge-${status}"><span class="badge-dot"></span>${labels[status] || 'New'}</span>`;
+  }
+
+  // ========== STATS ==========
+  function updateStats() {
+    const total = allBookings.length;
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const recent = allBookings.filter(b => new Date(b.created_at) >= weekAgo).length;
+    const statuses = getStatuses();
+    const confirmed = allBookings.filter(b => statuses[b.id] === 'confirmed').length;
+    const newCount = allBookings.filter(b => !statuses[b.id] || statuses[b.id] === 'new').length;
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-recent').textContent = recent;
+    document.getElementById('stat-confirmed').textContent = confirmed;
+    document.getElementById('stat-new').textContent = newCount;
+  }
+
+  // ========== FILTERING & SORTING ==========
+  function applyFilters() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const statusFilter = document.getElementById('status-filter').value;
+    const sortBy = document.getElementById('sort-select').value;
+
+    filteredBookings = allBookings.filter(b => {
+      // Status filter
+      const bStatus = getStatus(b.id);
+      if (statusFilter !== 'all' && bStatus !== statusFilter) return false;
+
+      // Search filter
+      if (query) {
+        const searchable = [b.name, b.email, b.phone, b.trip_type, b.notes].join(' ').toLowerCase();
+        if (!searchable.includes(query)) return false;
+      }
+      return true;
+    });
+
+    // Sort
+    filteredBookings.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest': return new Date(b.created_at) - new Date(a.created_at);
+        case 'oldest': return new Date(a.created_at) - new Date(b.created_at);
+        case 'name': return (a.name || '').localeCompare(b.name || '');
+        case 'date':
+          const da = a.preferred_date !== '--' ? new Date(a.preferred_date) : new Date(0);
+          const db = b.preferred_date !== '--' ? new Date(b.preferred_date) : new Date(0);
+          return db - da;
+        default: return 0;
+      }
+    });
+
+    currentPage = 1;
+    renderTable();
+  }
+
+  // ========== RENDERING ==========
+  function renderTable() {
+    const tbody = document.getElementById('bookings-body');
+    const totalPages = Math.ceil(filteredBookings.length / PER_PAGE) || 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * PER_PAGE;
+    const pageItems = filteredBookings.slice(start, start + PER_PAGE);
+
+    if (filteredBookings.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="empty-text">No bookings found</div></div></td></tr>`;
+      document.getElementById('showing-count').textContent = 'Showing 0 bookings';
+      document.getElementById('pagination').innerHTML = '';
+      return;
+    }
+
+    let html = '';
+    pageItems.forEach((b, idx) => {
+      const globalIdx = start + idx;
+      const status = getStatus(b.id);
+      const submitted = formatDate(b.created_at);
+      const tripDate = b.preferred_date !== '--' ? formatDate(b.preferred_date, true) : '--';
+
+      html += `
+        <tr onclick="toggleDetail('detail-${globalIdx}', event)">
+          <td class="td-date">${submitted}</td>
+          <td class="td-name">${escapeHtml(b.name)}</td>
+          <td class="td-email">${escapeHtml(b.email)}</td>
+          <td>${escapeHtml(b.phone)}</td>
+          <td>${escapeHtml(b.trip_type)}</td>
+          <td style="text-align:center;">${escapeHtml(String(b.guests))}</td>
+          <td>${tripDate}</td>
+          <td class="td-amount">${escapeHtml(String(b.estimated_total))}</td>
+          <td>
+            <div class="status-dropdown" onclick="event.stopPropagation();">
+              <div onclick="toggleStatusMenu('smenu-${globalIdx}')">${renderBadge(status)}</div>
+              <div class="status-menu" id="smenu-${globalIdx}">
+                <button class="status-option" onclick="setStatus('${b.id}','new'); closeAllMenus();">
+                  <span class="badge-dot" style="background:var(--gold);width:6px;height:6px;border-radius:50%;"></span> New
+                </button>
+                <button class="status-option" onclick="setStatus('${b.id}','confirmed'); closeAllMenus();">
+                  <span class="badge-dot" style="background:var(--blue);width:6px;height:6px;border-radius:50%;"></span> Confirmed
+                </button>
+                <button class="status-option" onclick="setStatus('${b.id}','completed'); closeAllMenus();">
+                  <span class="badge-dot" style="background:var(--green);width:6px;height:6px;border-radius:50%;"></span> Completed
+                </button>
+                <button class="status-option" onclick="if(confirm('Cancel this booking?')){setStatus('${b.id}','cancelled'); closeAllMenus();}">
+                  <span class="badge-dot" style="background:var(--red);width:6px;height:6px;border-radius:50%;"></span> Cancelled
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="detail-row" id="detail-${globalIdx}">
+          <td colspan="9" class="detail-cell">
+            <div class="detail-grid">
+              <div class="detail-item"><label>Full Name</label><span>${escapeHtml(b.name)}</span></div>
+              <div class="detail-item"><label>Email</label><span>${escapeHtml(b.email)}</span></div>
+              <div class="detail-item"><label>Phone</label><span>${escapeHtml(b.phone)}</span></div>
+              <div class="detail-item"><label>Trip Type</label><span>${escapeHtml(b.trip_type)}</span></div>
+              <div class="detail-item"><label>Number of Guests</label><span>${escapeHtml(String(b.guests))}</span></div>
+              <div class="detail-item"><label>Preferred Date</label><span>${tripDate}</span></div>
+              <div class="detail-item"><label>Estimated Total</label><span>${escapeHtml(String(b.estimated_total))}</span></div>
+              <div class="detail-item"><label>Submitted</label><span>${formatDate(b.created_at, false, true)}</span></div>
+            </div>
+            ${b.notes ? `<div class="detail-notes"><label>Notes / Message</label><p>${escapeHtml(b.notes)}</p></div>` : ''}
+            ${renderRawFields(b.raw, b)}
+            <div class="edit-date-row" id="editdate-${globalIdx}" style="display:none;">
+              <label>Change Date:</label>
+              <input type="date" id="newdate-${globalIdx}" value="${b.preferred_date !== '--' ? b.preferred_date : ''}">
+              <button class="save-btn" onclick="saveDate('${b.id}', ${globalIdx})">Save Date</button>
+              <button class="action-btn action-btn-edit" onclick="document.getElementById('editdate-${globalIdx}').style.display='none'" style="padding:0.4rem 0.75rem;">Cancel</button>
+            </div>
+            <div class="action-bar">
+              ${status === 'cancelled' ?
+                `<span style="color:var(--red);font-size:0.85rem;font-weight:600;">&#10007; Cancelled</span>
+                 <button class="action-btn action-btn-edit" onclick="event.stopPropagation();setStatus('${b.id}','new');closeAllMenus();" style="border-color:rgba(34,197,94,0.3);color:var(--green);">Restore Booking</button>` :
+                status === 'completed' ?
+                `<span class="action-confirmed" style="color:var(--gold);">&#9733; Completed</span>` :
+                status === 'confirmed' ?
+                `<span class="action-confirmed">&#10003; Confirmed</span>
+                 <button class="action-btn action-btn-complete" onclick="event.stopPropagation();setStatus('${b.id}','completed');closeAllMenus();">Mark Completed</button>` :
+                `<button class="action-btn action-btn-confirm" onclick="event.stopPropagation();confirmBooking('${b.id}',${globalIdx})">&#10003; Confirm Booking</button>`
+              }
+              ${status !== 'cancelled' ? `
+              <button class="action-btn action-btn-edit" onclick="event.stopPropagation();document.getElementById('editdate-${globalIdx}').style.display='flex';">&#9998; Edit Date</button>
+              <button class="action-btn action-btn-calendar" onclick="event.stopPropagation();addToCalendar(${globalIdx})">&#128197; Add to Calendar</button>
+              <button class="action-btn" onclick="event.stopPropagation();cancelBooking('${b.id}');" data-name="${escapeHtml(b.name)}" style="background:transparent;color:var(--red);border:1px solid rgba(239,68,68,0.3);">&#10007; Cancel</button>
+              ` : ''}
+            </div>
+          </td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = html;
+    document.getElementById('showing-count').textContent = `Showing ${start + 1}-${Math.min(start + PER_PAGE, filteredBookings.length)} of ${filteredBookings.length} bookings`;
+    renderPagination(totalPages);
+  }
+
+  function renderRawFields(raw, booking) {
+    // Show any fields not already displayed
+    const knownKeys = new Set(['name','Name','full-name','fullName','email','Email','phone','Phone','tel',
+      'trip-type','tripType','Trip Type','trip_type','guests','Guests','number-of-guests','numberOfGuests',
+      'preferred-date','preferredDate','Preferred Date','date','preferred_date',
+      'estimated-total','estimatedTotal','Estimated Total','total','estimated_total',
+      'notes','Notes','message','Message','ip','user_agent','referrer']);
+    const extra = Object.entries(raw).filter(([k]) => !knownKeys.has(k));
+    if (extra.length === 0) return '';
+    let html = '<div class="detail-notes" style="margin-top:0.75rem;"><label>Additional Form Data</label><div class="detail-grid" style="margin-top:0.5rem;">';
+    extra.forEach(([k, v]) => {
+      html += `<div class="detail-item"><label>${escapeHtml(k)}</label><span>${escapeHtml(String(v || '--'))}</span></div>`;
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderPagination(totalPages) {
+    const container = document.getElementById('pagination');
+    if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+    let html = `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&laquo;</button>`;
+
+    // Show max 7 page buttons
+    let pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('...');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) pages.push(i);
+      if (currentPage < totalPages - 2) pages.push('...');
+      pages.push(totalPages);
+    }
+
+    pages.forEach(p => {
+      if (p === '...') {
+        html += `<span style="color:var(--gray-500);padding:0 0.25rem;">...</span>`;
+      } else {
+        html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+      }
+    });
+
+    html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>&raquo;</button>`;
+    container.innerHTML = html;
+  }
+
+  function goToPage(p) {
+    const totalPages = Math.ceil(filteredBookings.length / PER_PAGE) || 1;
+    if (p < 1 || p > totalPages) return;
+    currentPage = p;
+    renderTable();
+    document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ========== UI INTERACTIONS ==========
+  function toggleDetail(id, event) {
+    // Don't toggle if clicking on status dropdown
+    if (event && event.target.closest('.status-dropdown')) return;
+    const row = document.getElementById(id);
+    if (row) row.classList.toggle('open');
+  }
+
+  function toggleStatusMenu(id) {
+    closeAllMenus();
+    const menu = document.getElementById(id);
+    if (menu) menu.classList.toggle('open');
+  }
+
+  function closeAllMenus() {
+    document.querySelectorAll('.status-menu').forEach(m => m.classList.remove('open'));
+  }
+
+  // Close menus on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.status-dropdown')) closeAllMenus();
+  });
+
+  // ========== UTILITIES ==========
+  function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ========== TAB SWITCHING ==========
+  function switchTab(tab) {
+    ['bookings','blog','calendar','traffic','settings'].forEach(t => {
+      document.getElementById('panel-' + t).style.display = tab === t ? 'block' : 'none';
+      document.getElementById('tab-' + t).classList.toggle('active', tab === t);
+    });
+    if (tab === 'blog') initBlogTab();
+    if (tab === 'traffic') fetchTraffic();
+    if (tab === 'settings') loadGCalSettings();
+    if (tab === 'calendar') renderCalendar();
+  }
+
+  // ========== TRAFFIC / ANALYTICS ==========
+  let trafficLoaded = false;
+  let pageviewFormId = null;
+
+  async function getPageviewFormId() {
+    if (pageviewFormId) return pageviewFormId;
+    const resp = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/forms`, {
+      headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}` }
+    });
+    if (!resp.ok) return null;
+    const forms = await resp.json();
+    const pvForm = forms.find(f => f.name === 'pageview');
+    if (pvForm) { pageviewFormId = pvForm.id; return pvForm.id; }
+    return null;
+  }
+
+  async function fetchTraffic() {
+    if (trafficLoaded) return;
+    trafficLoaded = true;
+
+    try {
+      const pvFormId = await getPageviewFormId();
+      if (!pvFormId) {
+        document.getElementById('t-total').textContent = '0';
+        document.getElementById('t-week').textContent = '0';
+        document.getElementById('t-today').textContent = '0';
+        document.getElementById('t-topreferrer').textContent = 'No data yet';
+        document.getElementById('chart-container').innerHTML = '<div style="text-align:center;color:var(--gray-500);width:100%;padding:3rem 0;">No visitor data yet. Traffic tracking is active &mdash; data will appear as visitors come to the site.</div>';
+        document.getElementById('top-pages-body').textContent = 'No data yet.';
+        document.getElementById('top-sources-body').textContent = 'No data yet.';
+        document.getElementById('screen-sizes-body').textContent = 'No data yet.';
+        document.getElementById('devices-body').textContent = 'No data yet.';
+        return;
+      }
+
+      // Fetch all pageview submissions
+      let page = 1, allPV = [], keepGoing = true;
+      while (keepGoing) {
+        const resp = await fetch(`https://api.netlify.com/api/v1/forms/${pvFormId}/submissions?per_page=100&page=${page}`, {
+          headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}` }
+        });
+        if (!resp.ok) break;
+        const subs = await resp.json();
+        if (subs.length === 0) { keepGoing = false; } else { allPV = allPV.concat(subs); if (subs.length < 100) keepGoing = false; page++; }
+      }
+
+      // Parse pageview data
+      const visits = allPV.map(s => ({
+        page: s.data?.page || '/',
+        referrer: s.data?.referrer || 'direct',
+        timestamp: s.created_at || s.data?.timestamp,
+        screen: s.data?.screen || '',
+        ua: s.data?.ua || ''
+      }));
+
+      const now = new Date();
+      const weekAgo = new Date(now - 7 * 86400000);
+      const dayAgo = new Date(now - 86400000);
+
+      // Stats
+      document.getElementById('t-total').textContent = visits.length;
+      document.getElementById('t-week').textContent = visits.filter(v => new Date(v.timestamp) >= weekAgo).length;
+      document.getElementById('t-today').textContent = visits.filter(v => new Date(v.timestamp) >= dayAgo).length;
+
+      // Top referrer
+      const refCounts = {};
+      visits.forEach(v => {
+        let ref = v.referrer || 'direct';
+        try { ref = new URL(ref).hostname; } catch(e) { ref = ref || 'direct'; }
+        refCounts[ref] = (refCounts[ref] || 0) + 1;
+      });
+      const topRef = Object.entries(refCounts).sort((a,b) => b[1] - a[1])[0];
+      document.getElementById('t-topreferrer').textContent = topRef ? topRef[0] : '--';
+
+      // Daily chart (last 30 days)
+      const dailyCounts = {};
+      for (let i = 29; i >= 0; i--) {
+        const d = new Date(now - i * 86400000);
+        dailyCounts[d.toISOString().split('T')[0]] = 0;
+      }
+      visits.forEach(v => {
+        const day = new Date(v.timestamp).toISOString().split('T')[0];
+        if (dailyCounts.hasOwnProperty(day)) dailyCounts[day]++;
+      });
+      const chartData = Object.entries(dailyCounts).map(([date, count]) => ({ date, count }));
+      renderChart(chartData);
+
+      // Top pages
+      const pageCounts = {};
+      visits.forEach(v => { pageCounts[v.page] = (pageCounts[v.page] || 0) + 1; });
+      renderRankedList('top-pages-body', pageCounts, 'var(--teal)');
+
+      // Top sources
+      renderRankedList('top-sources-body', refCounts, 'var(--gold)');
+
+      // Screen sizes
+      const screenCounts = {};
+      visits.forEach(v => {
+        if (v.screen) {
+          const w = parseInt(v.screen);
+          const label = w <= 480 ? 'Mobile' : w <= 1024 ? 'Tablet' : 'Desktop';
+          screenCounts[label] = (screenCounts[label] || 0) + 1;
+        }
+      });
+      renderRankedList('screen-sizes-body', screenCounts, 'var(--green)');
+
+      // Devices (from UA)
+      const deviceCounts = {};
+      visits.forEach(v => {
+        const ua = v.ua.toLowerCase();
+        const device = ua.includes('iphone') || ua.includes('android') ? 'Mobile' :
+                       ua.includes('ipad') || ua.includes('tablet') ? 'Tablet' : 'Desktop';
+        const browser = ua.includes('chrome') && !ua.includes('edg') ? 'Chrome' :
+                        ua.includes('safari') && !ua.includes('chrome') ? 'Safari' :
+                        ua.includes('firefox') ? 'Firefox' :
+                        ua.includes('edg') ? 'Edge' : 'Other';
+        deviceCounts[browser + ' (' + device + ')'] = (deviceCounts[browser + ' (' + device + ')'] || 0) + 1;
+      });
+      renderRankedList('devices-body', deviceCounts, 'var(--blue)');
+
+    } catch (err) {
+      console.error('Traffic fetch error:', err);
+      document.getElementById('t-total').textContent = 'Error';
+    }
+  }
+
+  function renderRankedList(containerId, counts, color) {
+    const el = document.getElementById(containerId);
+    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+    if (sorted.length === 0) { el.textContent = 'No data yet.'; return; }
+    const max = sorted[0][1];
+    el.innerHTML = sorted.slice(0, 10).map(([name, count]) => {
+      const pct = Math.round((count / max) * 100);
+      return `<div style="margin-bottom:0.6rem;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:0.2rem;">
+          <span style="color:var(--gray-300);">${escapeHtml(name)}</span>
+          <span style="color:var(--white);font-weight:600;">${count}</span>
+        </div>
+        <div style="height:4px;background:var(--navy);border-radius:2px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:${color};border-radius:2px;"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderChart(data) {
+    const container = document.getElementById('chart-container');
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div style="text-align:center;color:var(--gray-500);width:100%;padding:3rem 0;">No data yet</div>';
+      return;
+    }
+    const max = Math.max(...data.map(d => d.count), 1);
+    container.innerHTML = data.map(d => {
+      const h = Math.max((d.count / max) * 180, 2);
+      const label = new Date(d.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return `<div class="chart-bar" style="height:${h}px;"><div class="chart-tip">${label}: ${d.count}</div></div>`;
+    }).join('');
+  }
+
+  // ========== EMAIL NOTIFICATIONS ==========
+  async function saveNotifEmail() {
+    const email = document.getElementById('notif-email').value.trim();
+    if (!email) return;
+    try {
+      // Get the booking form ID
+      const fId = await getFormId();
+      // Set notification email on the Netlify site
+      const resp = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notification_email: email })
+      });
+      // Also create a form notification hook
+      const hookResp = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/notifications`, {
+        headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}` }
+      });
+      const hooks = hookResp.ok ? await hookResp.json() : [];
+      const existing = hooks.find(h => h.type === 'email' && h.event === 'submission_created');
+      if (!existing) {
+        await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/notifications`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${NETLIFY_TOKEN}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'email', event: 'submission_created', email: email, form_id: fId })
+        });
+      }
+      localStorage.setItem('ws_notif_email', email);
+      document.getElementById('notif-status').innerHTML = '<span style="color:var(--green);">&#10003; Email notification saved! You\'ll receive an email for each new booking.</span>';
+    } catch (err) {
+      document.getElementById('notif-status').innerHTML = '<span style="color:var(--red);">Error: ' + escapeHtml(err.message) + '</span>';
+    }
+  }
+
+  // ========== GOOGLE ANALYTICS ==========
+  function saveGAId() {
+    const gaId = document.getElementById('ga-id').value.trim();
+    if (!gaId) return;
+    if (!gaId.match(/^G-[A-Z0-9]+$/)) {
+      document.getElementById('ga-status').innerHTML = '<span style="color:var(--red);">Invalid format. Should be G-XXXXXXXXXX</span>';
+      return;
+    }
+    localStorage.setItem('ws_ga_id', gaId);
+    document.getElementById('ga-status').innerHTML = '<span style="color:var(--green);">&#10003; Saved! GA4 tracking is now active on all pages.</span>';
+  }
+
+  // Load saved settings
+  (function() {
+    const savedEmail = localStorage.getItem('ws_notif_email');
+    if (savedEmail) document.getElementById('notif-email').value = savedEmail;
+    const savedGA = localStorage.getItem('ws_ga_id');
+    if (savedGA) document.getElementById('ga-id').value = savedGA;
+  })();
+
+  // ========== CONFIRM BOOKING ==========
+  function confirmBooking(bookingId, idx) {
+    setStatus(bookingId, 'confirmed');
+    closeAllMenus();
+
+    // Try Google Calendar API sync if connected
+    const gcalToken = localStorage.getItem('ws_gcal_token');
+    if (gcalToken) {
+      addToCalendarAPI(idx, gcalToken);
+    }
+  }
+
+  function cancelBooking(bookingId) {
+    var booking = allBookings.find(function(b){ return b.id === bookingId; });
+    var name = booking ? booking.name : 'this guest';
+    if (confirm('Cancel this booking for ' + name + '?')) {
+      setStatus(bookingId, 'cancelled');
+      closeAllMenus();
+    }
+  }
+
+  // ========== DATE EDITING ==========
+  function getDateOverrides() {
+    try { return JSON.parse(localStorage.getItem('ws_date_overrides') || '{}'); }
+    catch { return {}; }
+  }
+
+  function saveDate(bookingId, idx) {
+    const input = document.getElementById('newdate-' + idx);
+    const newDate = input.value;
+    if (!newDate) return;
+
+    const overrides = getDateOverrides();
+    overrides[bookingId] = newDate;
+    localStorage.setItem('ws_date_overrides', JSON.stringify(overrides));
+
+    // Update in-memory data
+    const booking = allBookings.find(b => b.id === bookingId);
+    if (booking) booking.preferred_date = newDate;
+
+    document.getElementById('editdate-' + idx).style.display = 'none';
+    applyFilters();
+  }
+
+  // Apply date overrides after fetching bookings (patch into fetchBookings)
+  const _origApplyFilters = applyFilters;
+  applyFilters = function() {
+    const overrides = getDateOverrides();
+    allBookings.forEach(b => {
+      if (overrides[b.id]) b.preferred_date = overrides[b.id];
+    });
+    _origApplyFilters();
+  };
+
+  // ========== GOOGLE CALENDAR - QUICK LINK ==========
+  function addToCalendar(idx) {
+    const b = filteredBookings[idx] || allBookings[idx];
+    if (!b) return;
+
+    const gcalToken = localStorage.getItem('ws_gcal_token');
+    if (gcalToken) {
+      addToCalendarAPI(idx, gcalToken);
+      return;
+    }
+
+    // Fallback: open Google Calendar URL
+    const title = encodeURIComponent('Fishing Trip - ' + b.name);
+    const tripType = b.trip_type || '';
+    const hours = tripType.includes('8') ? 8 : tripType.includes('6') ? 6 : 4;
+    let dateStr = b.preferred_date;
+    if (dateStr === '--') dateStr = new Date().toISOString().split('T')[0];
+
+    const startDate = dateStr.replace(/-/g, '') + 'T060000';
+    const endH = 6 + hours;
+    const endDate = dateStr.replace(/-/g, '') + 'T' + String(endH).padStart(2, '0') + '0000';
+
+    const details = encodeURIComponent(
+      'Guest: ' + b.name + '\\n' +
+      'Phone: ' + b.phone + '\\n' +
+      'Email: ' + b.email + '\\n' +
+      'Trip: ' + b.trip_type + '\\n' +
+      'Guests: ' + b.guests + '\\n' +
+      'Total: $' + b.estimated_total + '\\n' +
+      (b.notes ? 'Notes: ' + b.notes : '')
+    );
+    const location = encodeURIComponent('Smith Mountain Lake, Moneta, VA 24121');
+
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + title +
+      '&dates=' + startDate + '/' + endDate +
+      '&details=' + details +
+      '&location=' + location;
+
+    window.open(url, '_blank');
+  }
+
+  // ========== GOOGLE CALENDAR API ==========
+  let gcalTokenClient = null;
+
+  function saveGCalClientId() {
+    const clientId = document.getElementById('gcal-client-id').value.trim();
+    if (!clientId) return;
+    localStorage.setItem('ws_gcal_client_id', clientId);
+    document.getElementById('gcal-connect-btn').disabled = false;
+    loadGCalSettings();
+  }
+
+  function loadGCalSettings() {
+    const clientId = localStorage.getItem('ws_gcal_client_id') || '';
+    const token = localStorage.getItem('ws_gcal_token');
+    const email = localStorage.getItem('ws_gcal_email');
+
+    document.getElementById('gcal-client-id').value = clientId;
+    document.getElementById('gcal-connect-btn').disabled = !clientId;
+
+    if (token && email) {
+      document.getElementById('gcal-status').innerHTML = '<span class="gcal-connected">&#10003; Connected</span> <span style="color:var(--gray-400);font-size:0.85rem;margin-left:0.5rem;">' + escapeHtml(email) + '</span>';
+      document.getElementById('gcal-connect-btn').style.display = 'none';
+      document.getElementById('gcal-disconnect-btn').style.display = 'inline-flex';
+    } else if (token) {
+      document.getElementById('gcal-status').innerHTML = '<span class="gcal-connected">&#10003; Connected</span>';
+      document.getElementById('gcal-connect-btn').style.display = 'none';
+      document.getElementById('gcal-disconnect-btn').style.display = 'inline-flex';
+    } else {
+      document.getElementById('gcal-status').innerHTML = '<span style="color:var(--gray-500);font-size:0.85rem;">Not connected</span>';
+      document.getElementById('gcal-connect-btn').style.display = 'inline-flex';
+      document.getElementById('gcal-disconnect-btn').style.display = 'none';
+    }
+  }
+
+  function connectGoogleCalendar() {
+    const clientId = localStorage.getItem('ws_gcal_client_id');
+    if (!clientId) { alert('Please enter your Google OAuth Client ID first.'); return; }
+
+    if (typeof google === 'undefined' || !google.accounts) {
+      alert('Google Identity Services not loaded. Please refresh the page.');
+      return;
+    }
+
+    gcalTokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/userinfo.email',
+      callback: async (response) => {
+        if (response.access_token) {
+          localStorage.setItem('ws_gcal_token', response.access_token);
+          // Get user email
+          try {
+            const resp = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+              headers: { 'Authorization': 'Bearer ' + response.access_token }
+            });
+            const info = await resp.json();
+            if (info.email) localStorage.setItem('ws_gcal_email', info.email);
+          } catch (e) {}
+          loadGCalSettings();
+        }
+      }
+    });
+    gcalTokenClient.requestAccessToken();
+  }
+
+  function disconnectGoogleCalendar() {
+    localStorage.removeItem('ws_gcal_token');
+    localStorage.removeItem('ws_gcal_email');
+    loadGCalSettings();
+  }
+
+  async function addToCalendarAPI(idx, token) {
+    const start = (currentPage - 1) * PER_PAGE;
+    const b = filteredBookings[start + idx] || filteredBookings[idx] || allBookings[idx];
+    if (!b) return;
+
+    const tripType = b.trip_type || '';
+    const hours = tripType.includes('8') ? 8 : tripType.includes('6') ? 6 : 4;
+    let dateStr = b.preferred_date;
+    if (dateStr === '--') dateStr = new Date().toISOString().split('T')[0];
+
+    const startTime = dateStr + 'T06:00:00';
+    const endH = 6 + hours;
+    const endTime = dateStr + 'T' + String(endH).padStart(2, '0') + ':00:00';
+
+    const event = {
+      summary: 'Fishing Trip - ' + b.name,
+      location: 'Smith Mountain Lake, Moneta, VA 24121',
+      description: 'Guest: ' + b.name + '\nPhone: ' + b.phone + '\nEmail: ' + b.email + '\nTrip: ' + b.trip_type + '\nGuests: ' + b.guests + '\nTotal: $' + b.estimated_total + (b.notes ? '\nNotes: ' + b.notes : ''),
+      start: { dateTime: startTime, timeZone: 'America/New_York' },
+      end: { dateTime: endTime, timeZone: 'America/New_York' },
+      reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 60 }, { method: 'popup', minutes: 1440 }] }
+    };
+
+    try {
+      const resp = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify(event)
+      });
+
+      if (resp.ok) {
+        const created = await resp.json();
+        alert('Event added to Google Calendar!\n\n' + b.name + ' - ' + dateStr);
+      } else if (resp.status === 401) {
+        // Token expired, clear and fall back to URL
+        localStorage.removeItem('ws_gcal_token');
+        localStorage.removeItem('ws_gcal_email');
+        loadGCalSettings();
+        addToCalendar(idx); // Retry with URL fallback
+      } else {
+        const err = await resp.json();
+        alert('Failed to add event: ' + (err.error?.message || resp.statusText) + '\n\nOpening Google Calendar link instead...');
+        localStorage.removeItem('ws_gcal_token');
+        addToCalendar(idx);
+      }
+    } catch (e) {
+      alert('Error: ' + e.message + '\n\nOpening Google Calendar link instead...');
+      localStorage.removeItem('ws_gcal_token');
+      addToCalendar(idx);
+    }
+  }
+
+  // ========== BLOG MANAGEMENT ==========
+  let editingBlogId = null;
+
+  function getBlogPosts() {
+    try { return JSON.parse(localStorage.getItem('ws_blog_posts') || '[]'); } catch { return []; }
+  }
+
+  function renderBlogList() {
+    const posts = getBlogPosts();
+    document.getElementById('blog-count').textContent = posts.length + ' custom post' + (posts.length !== 1 ? 's' : '') + ' (+ pre-built SEO posts in blog-data.json)';
+    const container = document.getElementById('blog-posts-list');
+
+    if (posts.length === 0) {
+      container.innerHTML = '<div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:2rem;text-align:center;color:var(--gray-400);">No custom blog posts yet. The 15 pre-built SEO posts are automatically loaded from blog-data.json. Click "+ New Blog Post" to add more.</div>';
+      return;
+    }
+
+    container.innerHTML = posts.map((post, i) => {
+      const date = new Date(post.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const excerpt = post.metaDescription || post.content?.replace(/<[^>]+>/g, '').substring(0, 100) + '...';
+      return `<div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:1.25rem;display:flex;gap:1.25rem;align-items:center;">
+        <img src="${post.heroImage || 'images/site_005.jpg'}" alt="" style="width:80px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.7rem;color:var(--teal);text-transform:uppercase;letter-spacing:1px;">${date}</div>
+          <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(post.title)}</div>
+          <div style="font-size:0.8rem;color:var(--gray-500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(excerpt)}</div>
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-shrink:0;">
+          <button class="action-btn action-btn-edit" onclick="editBlogPost(${i})" style="padding:0.4rem 0.75rem;font-size:0.75rem;">Edit</button>
+          <button class="action-btn" onclick="if(confirm('Delete this post?')){deleteBlogPost(${i})}" style="padding:0.4rem 0.75rem;font-size:0.75rem;background:transparent;color:var(--red);border:1px solid rgba(239,68,68,0.3);">Delete</button>
+          <a href="blog.html#${post.slug}" target="_blank" class="action-btn action-btn-calendar" style="padding:0.4rem 0.75rem;font-size:0.75rem;text-decoration:none;">View</a>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function openBlogEditor(post) {
+    editingBlogId = null;
+    document.getElementById('blog-editor-title').textContent = 'NEW BLOG POST';
+    document.getElementById('be-title').value = '';
+    document.getElementById('be-slug').value = '';
+    document.getElementById('be-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('be-meta').value = '';
+    document.getElementById('be-content').value = '';
+    document.getElementById('be-image').value = 'images/site_008.jpg';
+    document.getElementById('be-image-preview').innerHTML = '';
+    document.getElementById('modal-blog').style.display = 'flex';
+  }
+
+  function closeBlogEditor() { document.getElementById('modal-blog').style.display = 'none'; }
+
+  function editBlogPost(idx) {
+    const posts = getBlogPosts();
+    const post = posts[idx];
+    if (!post) return;
+    editingBlogId = idx;
+    document.getElementById('blog-editor-title').textContent = 'EDIT BLOG POST';
+    document.getElementById('be-title').value = post.title || '';
+    document.getElementById('be-slug').value = post.slug || '';
+    document.getElementById('be-date').value = post.date || '';
+    document.getElementById('be-meta').value = post.metaDescription || '';
+    document.getElementById('be-content').value = post.content || '';
+    document.getElementById('be-image').value = post.heroImage || 'images/site_008.jpg';
+    document.getElementById('be-image-preview').innerHTML = '';
+    document.getElementById('modal-blog').style.display = 'flex';
+  }
+
+  function deleteBlogPost(idx) {
+    const posts = getBlogPosts();
+    posts.splice(idx, 1);
+    localStorage.setItem('ws_blog_posts', JSON.stringify(posts));
+    renderBlogList();
+  }
+
+  function saveBlogPost() {
+    const title = document.getElementById('be-title').value.trim();
+    if (!title) { alert('Title is required.'); return; }
+
+    let slug = document.getElementById('be-slug').value.trim();
+    if (!slug) slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
+    const post = {
+      title,
+      slug,
+      date: document.getElementById('be-date').value || new Date().toISOString().split('T')[0],
+      metaDescription: document.getElementById('be-meta').value.trim(),
+      heroImage: document.getElementById('be-image').value,
+      content: document.getElementById('be-content').value
+    };
+
+    // Check for uploaded custom image
+    const preview = document.getElementById('be-image-preview');
+    const customImg = preview.querySelector('img');
+    if (customImg && customImg.src.startsWith('data:')) {
+      post.heroImage = customImg.src; // Store as base64
+    }
+
+    const posts = getBlogPosts();
+    if (editingBlogId !== null) {
+      posts[editingBlogId] = post;
+    } else {
+      posts.unshift(post);
+    }
+    localStorage.setItem('ws_blog_posts', JSON.stringify(posts));
+
+    closeBlogEditor();
+    renderBlogList();
+    editingBlogId = null;
+  }
+
+  // Auto-generate slug from title
+  document.getElementById('be-title')?.addEventListener('input', function() {
+    if (editingBlogId !== null) return; // Don't auto-slug on edit
+    const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    document.getElementById('be-slug').value = slug;
+  });
+
+  // Blog formatting toolbar
+  function blogFormat(type) {
+    const ta = document.getElementById('be-content');
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const selected = ta.value.substring(start, end);
+    let insert = '';
+
+    switch (type) {
+      case 'h2': insert = '<h2>' + (selected || 'Heading') + '</h2>'; break;
+      case 'h3': insert = '<h3>' + (selected || 'Subheading') + '</h3>'; break;
+      case 'bold': insert = '<strong>' + (selected || 'bold text') + '</strong>'; break;
+      case 'italic': insert = '<em>' + (selected || 'italic text') + '</em>'; break;
+      case 'link': insert = '<a href="' + (prompt('URL:') || '#') + '">' + (selected || 'link text') + '</a>'; break;
+      case 'ul': insert = '<ul>\n  <li>' + (selected || 'Item 1') + '</li>\n  <li>Item 2</li>\n  <li>Item 3</li>\n</ul>'; break;
+      case 'quote': insert = '<blockquote>' + (selected || 'Quote text here') + '</blockquote>'; break;
+      case 'image': insert = '<img src="' + (prompt('Image path (e.g. images/site_015.jpg):') || 'images/site_015.jpg') + '" alt="' + (selected || 'Photo description') + '">'; break;
+      case 'p': insert = '<p>' + (selected || 'Paragraph text here.') + '</p>'; break;
+    }
+
+    ta.value = ta.value.substring(0, start) + insert + ta.value.substring(end);
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = start + insert.length;
+  }
+
+  // Image upload handler
+  function handleBlogImageUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('be-image-preview').innerHTML = '<img src="' + e.target.result + '" style="max-width:200px;max-height:120px;border-radius:8px;margin-top:0.5rem;"><span style="color:var(--green);font-size:0.75rem;margin-left:0.5rem;">Uploaded (stored as base64)</span>';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Load blog list when tab opens
+  function initBlogTab() { renderBlogList(); }
+
+  // ========== TRIP CALENDAR ==========
+  let calYear, calMonth;
+  (function() {
+    const now = new Date();
+    calYear = now.getFullYear();
+    calMonth = now.getMonth();
+  })();
+
+  function calNav(dir) { calMonth += dir; if (calMonth > 11) { calMonth = 0; calYear++; } if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+  function calToday() { const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth(); renderCalendar(); }
+
+  function getManualTrips() { try { return JSON.parse(localStorage.getItem('ws_manual_trips') || '[]'); } catch { return []; } }
+  function getBlockedDates() { try { return JSON.parse(localStorage.getItem('ws_blocked_dates') || '[]'); } catch { return []; } }
+
+  function renderCalendar() {
+    const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+    document.getElementById('cal-month-label').textContent = months[calMonth] + ' ' + calYear;
+
+    // Day headers
+    const hdr = document.getElementById('cal-header');
+    hdr.innerHTML = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => '<div class="cal-dayheader">' + d + '</div>').join('');
+
+    // Build days
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+
+    // Gather events for this month
+    const events = {};
+    const addEvent = (dateStr, ev) => { if (!events[dateStr]) events[dateStr] = []; events[dateStr].push(ev); };
+
+    // Bookings from form submissions
+    const statuses = getStatuses();
+    const overrides = getDateOverrides();
+    allBookings.forEach(b => {
+      let date = overrides[b.id] || b.preferred_date;
+      if (!date || date === '--') return;
+      const status = statuses[b.id] || 'new';
+      if (status === 'cancelled') return;
+      addEvent(date, { type: 'booking-' + (status === 'completed' ? 'completed' : status === 'confirmed' ? 'confirmed' : 'new'), label: b.name, detail: b.trip_type });
+    });
+
+    // Manual trips
+    getManualTrips().forEach(t => {
+      addEvent(t.date, { type: 'booking-manual', label: t.name, detail: t.trip });
+    });
+
+    // Blocked dates
+    getBlockedDates().forEach(b => {
+      const start = new Date(b.start + 'T12:00:00');
+      const end = new Date(b.end + 'T12:00:00');
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        addEvent(d.toISOString().split('T')[0], { type: 'blocked', label: b.reason || 'Blocked', detail: '' });
+      }
+    });
+
+    // Render grid
+    let html = '';
+    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+    for (let i = 0; i < totalCells; i++) {
+      let day, dateStr, isOther = false;
+      if (i < firstDay) {
+        day = daysInPrev - firstDay + i + 1;
+        const m = calMonth === 0 ? 12 : calMonth;
+        const y = calMonth === 0 ? calYear - 1 : calYear;
+        dateStr = y + '-' + String(m).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+        isOther = true;
+      } else if (i >= firstDay + daysInMonth) {
+        day = i - firstDay - daysInMonth + 1;
+        const m = calMonth + 2 > 12 ? 1 : calMonth + 2;
+        const y = calMonth + 2 > 12 ? calYear + 1 : calYear;
+        dateStr = y + '-' + String(m).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+        isOther = true;
+      } else {
+        day = i - firstDay + 1;
+        dateStr = calYear + '-' + String(calMonth + 1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+      }
+
+      const isToday = dateStr === todayStr;
+      const dayEvents = events[dateStr] || [];
+      const eventsHtml = dayEvents.slice(0, 3).map(e =>
+        '<div class="cal-event ' + e.type + '" title="' + escapeHtml(e.label + (e.detail ? ' - ' + e.detail : '')) + '">' + escapeHtml(e.label) + '</div>'
+      ).join('') + (dayEvents.length > 3 ? '<div style="font-size:0.6rem;color:var(--gray-500);">+' + (dayEvents.length - 3) + ' more</div>' : '');
+
+      html += '<div class="cal-day' + (isOther ? ' other-month' : '') + (isToday ? ' today' : '') + '" onclick="calDayClick(\'' + dateStr + '\')">' +
+        '<div class="cal-day-num">' + day + '</div>' +
+        eventsHtml +
+        '</div>';
+    }
+    document.getElementById('cal-grid').innerHTML = html;
+  }
+
+  function calDayClick(dateStr) {
+    // Show action picker
+    const action = document.createElement('div');
+    action.id = 'cal-action-picker';
+    action.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    const label = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    action.innerHTML = '<div style="background:var(--navy-light);border:1px solid var(--navy-lighter);border-radius:var(--radius);padding:2rem;width:100%;max-width:340px;text-align:center;">' +
+      '<div style="font-family:var(--font-display);font-size:1.3rem;color:var(--white);letter-spacing:1px;margin-bottom:1.25rem;">' + label.toUpperCase() + '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:0.75rem;">' +
+        '<button class="action-btn action-btn-confirm" onclick="closeCalPicker();document.getElementById(\'m-date\').value=\'' + dateStr + '\';openManualBooking();" style="width:100%;justify-content:center;padding:0.75rem;">+ Add Trip</button>' +
+        '<button class="action-btn" onclick="closeCalPicker();quickBlock(\'' + dateStr + '\');" style="width:100%;justify-content:center;padding:0.75rem;background:var(--red);color:white;">Block This Day</button>' +
+        '<button class="action-btn action-btn-edit" onclick="closeCalPicker();" style="width:100%;justify-content:center;padding:0.75rem;">Cancel</button>' +
+      '</div></div>';
+    action.addEventListener('click', function(e) { if (e.target === action) closeCalPicker(); });
+    document.body.appendChild(action);
+  }
+
+  function closeCalPicker() {
+    const p = document.getElementById('cal-action-picker');
+    if (p) p.remove();
+  }
+
+  function quickBlock(dateStr) {
+    const reason = prompt('Reason (optional):') || '';
+    const blocks = getBlockedDates();
+    blocks.push({ start: dateStr, end: dateStr, reason });
+    localStorage.setItem('ws_blocked_dates', JSON.stringify(blocks));
+    renderCalendar();
+  }
+
+  // Manual booking
+  function openManualBooking() {
+    const modal = document.getElementById('modal-manual');
+    modal.style.display = 'flex';
+    if (!document.getElementById('m-date').value) {
+      document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
+    }
+  }
+
+  function saveManualBooking() {
+    const name = document.getElementById('m-name').value.trim();
+    const date = document.getElementById('m-date').value;
+    if (!name || !date) { alert('Name and date are required.'); return; }
+
+    const trip = { name, date,
+      phone: document.getElementById('m-phone').value.trim(),
+      email: document.getElementById('m-email').value.trim(),
+      trip: document.getElementById('m-trip').value,
+      guests: document.getElementById('m-guests').value,
+      notes: document.getElementById('m-notes').value.trim(),
+      id: 'manual-' + Date.now()
+    };
+
+    const trips = getManualTrips();
+    trips.push(trip);
+    localStorage.setItem('ws_manual_trips', JSON.stringify(trips));
+
+    // Clear form
+    ['m-name','m-phone','m-email','m-date','m-notes'].forEach(id => document.getElementById(id).value = '');
+    closeModal('modal-manual');
+    renderCalendar();
+  }
+
+  // Block dates
+  function openBlockDates() {
+    document.getElementById('modal-block').style.display = 'flex';
+    document.getElementById('b-start').value = '';
+    document.getElementById('b-end').value = '';
+    document.getElementById('b-reason').value = '';
+  }
+
+  function saveBlockDates() {
+    const start = document.getElementById('b-start').value;
+    const end = document.getElementById('b-end').value || start;
+    if (!start) { alert('Start date is required.'); return; }
+
+    const blocks = getBlockedDates();
+    blocks.push({ start, end, reason: document.getElementById('b-reason').value.trim() });
+    localStorage.setItem('ws_blocked_dates', JSON.stringify(blocks));
+
+    closeModal('modal-block');
+    renderCalendar();
+  }
+
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  // Close modals on backdrop click
+  ['modal-manual','modal-block'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', function(e) {
+      if (e.target === this) closeModal(id);
+    });
+  });
+
+  function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  function formatDate(dateStr, dateOnly, full) {
+    if (!dateStr || dateStr === '--') return '--';
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      if (dateOnly) {
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+      if (full) {
+        return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+      }
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    } catch { return dateStr; }
+  }
+</script>
+
+</body>
+</html>

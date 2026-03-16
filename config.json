@@ -1,0 +1,84 @@
+{
+  "business": {
+    "name": "SML Wicked Striper Guide Service LLC",
+    "shortName": "Wicked Striper",
+    "tagline": "Trophy Stripers on Smith Mountain Lake",
+    "captainName": "Captain Tommy Moore",
+    "phone": "(434) 610-3255",
+    "phoneRaw": "+14346103255",
+    "email": "smlwickedstriper@gmail.com",
+    "address": "200 Pine Knob Cir, Moneta, VA 24121",
+    "city": "Moneta",
+    "state": "VA",
+    "zip": "24121",
+    "lake": "Smith Mountain Lake",
+    "region": "Virginia",
+    "landmark": "Blue Ridge Mountains",
+    "lat": 37.14113,
+    "lng": -79.65909,
+    "facebook": "https://www.facebook.com/SMLWickedStriper-2160188210958596/",
+    "googlePlaceId": "ChIJn0TwYxhBTYgRBZmrbGYAlPc",
+    "fishSpecies": "Striped Bass",
+    "fishCommon": "striper"
+  },
+  "pricing": {
+    "currency": "USD",
+    "tiers": [
+      {
+        "name": "Half Day",
+        "hours": 4,
+        "basePrice": 400,
+        "basePeople": 2,
+        "description": "4 Hours on the Water",
+        "features": ["All equipment included", "Live bait & tackle", "Perfect for beginners", "PFDs provided"]
+      },
+      {
+        "name": "Full Day",
+        "hours": 6,
+        "basePrice": 600,
+        "basePeople": 2,
+        "popular": true,
+        "description": "6 Hours on the Water",
+        "features": ["All equipment included", "Live bait & tackle", "Best for trophy stripers", "PFDs provided", "More water coverage"]
+      },
+      {
+        "name": "Marathon",
+        "hours": 8,
+        "basePrice": 800,
+        "basePeople": 2,
+        "description": "8 Hours on the Water",
+        "features": ["All equipment included", "Live bait & tackle", "Maximum fishing time", "PFDs provided", "All-day adventure"]
+      }
+    ],
+    "additionalPersonCost": 25,
+    "maxGuests": 6,
+    "depositRequired": true,
+    "licenseRequired": "Virginia DWR freshwater fishing license",
+    "licenseUrl": "https://www.dgif.virginia.gov/licenses/",
+    "included": ["Rods & reels", "Tackle", "Live bait", "PFDs"]
+  },
+  "site": {
+    "domain": "sml-wicked-striper.netlify.app",
+    "netlifyName": "sml-wicked-striper",
+    "repoName": "sml-wicked-striper",
+    "adminPassword": "striper2006"
+  },
+  "design": {
+    "colors": {
+      "navy": "#0b1a2e",
+      "navyLight": "#112240",
+      "ocean": "#1a73e8",
+      "teal": "#0ea5e9",
+      "gold": "#f59e0b",
+      "goldLight": "#fbbf24"
+    },
+    "heroImage": "images/site_005.jpg",
+    "captainImage": "images/captain-tommy.jpg",
+    "ctaImage": "images/site_001.jpg",
+    "logo": "images/logo.png"
+  },
+  "scrape": {
+    "sourceWebsite": "https://www.smlwickedstriperguideservices.com",
+    "facebookUrl": "https://www.facebook.com/SMLWickedStriper-2160188210958596/"
+  }
+}
